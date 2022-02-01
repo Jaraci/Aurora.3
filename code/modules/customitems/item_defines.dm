@@ -2388,7 +2388,7 @@ All custom items with worn sprites must follow the contained sprite system: http
 	icon_state = "burner"
 	drop_sound = 'sound/items/drop/glass.ogg'
 	pickup_sound = 'sound/items/pickup/glass.ogg'
-	var/burning = FALSE
+	var/lit = FALSE
 
 /obj/item/fluff/nasira_burner/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -2396,30 +2396,29 @@ All custom items with worn sprites must follow the contained sprite system: http
 
 /obj/item/fluff/nasira_burner/examine(mob/user)
 	..(user)
-	if(burning)
+	if(lit)
 		to_chat(user, "\The [src] is currently lit.")
 
 /obj/item/fluff/nasira_burner/attack_self(mob/user as mob)
-	burning = !burning
+	lit = !lit
 
-	if(burning)
+	if(lit)
 		set_light(2)
 		START_PROCESSING(SSprocessing, src)
 		icon_state = "burner_lit"
-		light_colour = LIGHT_COLOR_RED
 	else
 		set_light(0)
-		burning = FALSE
+		lit = FALSE
 		icon_state = initial(icon_state)
 		STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/fluff/nasira_burner/process()
 	if(prob(10))
-		var/burning_message
+		var/lit_message
 		
-		burning_message = pick( "The smell of ceremonial incense reaches your nose.",
+		lit_message = pick( "The smell of ceremonial incense reaches your nose.",
 								"Adhomian incense permeates the air around you..",
 								"The soft glow of the incense burner illuminates the vicinity.")
 
-		if(burning_message)
-			visible_message("<span class='notice'>[burning_message]</span>")
+		if(lit_message)
+			visible_message("<span class='notice'>[lit_message]</span>")

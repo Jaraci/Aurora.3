@@ -2393,6 +2393,7 @@ All custom items with worn sprites must follow the contained sprite system: http
 	var/zippomsg = "<span class='notice'>With a flick of their wrist, USER lights their NAME with their FLAME.</span>"
 	var/weldermsg = "<span class='notice'>USER lights the NAME with FLAME. That looked rather unsafe!</span>"
 	var/ignitermsg = "<span class='notice'>USER fiddles with FLAME, and eventually manages to light the NAME.</span>"
+	var/genericmsg = "<span class='notice'>USER lights the NAME with their FLAME.</span>"
 	var/lit = FALSE
 
 /obj/item/fluff/nasira_burner/Destroy()
@@ -2422,19 +2423,19 @@ All custom items with worn sprites must follow the contained sprite system: http
 /obj/item/fluff/nasira_burner/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	if(W.isFlameSource())
-		var/text = matchmes
+		var/text = matchmsg
 		if(istype(W, /obj/item/flame/match))
-			text = matchmes
+			text = matchmsg
 		else if(istype(W, /obj/item/flame/lighter/zippo))
-			text = zippomes
+			text = zippomsg
 		else if(istype(W, /obj/item/flame/lighter))
-			text = lightermes
+			text = lightermsg
 		else if(W.iswelder())
-			text = weldermes
+			text = weldermsg
 		else if(istype(W, /obj/item/device/assembly/igniter))
-			text = ignitermes
+			text = ignitermsg
 		else
-			text = genericmes
+			text = genericmsg
 		text = replacetext(text, "USER", "\the [user]")
 		text = replacetext(text, "NAME", "\the [name]")
 		text = replacetext(text, "FLAME", "\the [W.name]")

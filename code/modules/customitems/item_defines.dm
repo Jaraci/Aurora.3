@@ -2388,11 +2388,11 @@ All custom items with worn sprites must follow the contained sprite system: http
 	icon_state = "burner"
 	drop_sound = 'sound/items/drop/glass.ogg'
 	pickup_sound = 'sound/items/pickup/glass.ogg'
-	matchmes = "<span class='notice'>USER lights the NAME with their FLAME.</span>"
-	lightermes = "<span class='notice'>USER manages to awkwardly light the NAME with FLAME.</span>"
-	zippomes = "<span class='notice'>With a flick of their wrist, USER lights their NAME with their FLAME.</span>"
-	weldermes = "<span class='notice'>USER lights the NAME with FLAME. That looked rather unsafe!</span>"
-	ignitermes = "<span class='notice'>USER fiddles with FLAME, and eventually manages to light the NAME.</span>"
+	var/matchmsg = "<span class='notice'>USER lights the NAME with their FLAME.</span>"
+	var/lightermsg = "<span class='notice'>USER manages to awkwardly light the NAME with FLAME.</span>"
+	var/zippomsg = "<span class='notice'>With a flick of their wrist, USER lights their NAME with their FLAME.</span>"
+	var/weldermsg = "<span class='notice'>USER lights the NAME with FLAME. That looked rather unsafe!</span>"
+	var/ignitermsg = "<span class='notice'>USER fiddles with FLAME, and eventually manages to light the NAME.</span>"
 	var/lit = FALSE
 
 /obj/item/fluff/nasira_burner/Destroy()

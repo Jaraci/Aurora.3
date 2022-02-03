@@ -2388,12 +2388,12 @@ All custom items with worn sprites must follow the contained sprite system: http
 	icon_state = "burner"
 	drop_sound = 'sound/items/drop/glass.ogg'
 	pickup_sound = 'sound/items/pickup/glass.ogg'
-	var/matchmsg = "<span class='notice'>USER lights the NAME with their FLAME.</span>"
-	var/lightermsg = "<span class='notice'>USER manages to awkwardly light the NAME with FLAME.</span>"
-	var/zippomsg = "<span class='notice'>With a flick of their wrist, USER lights their NAME with their FLAME.</span>"
-	var/weldermsg = "<span class='notice'>USER lights the NAME with FLAME. That looked rather unsafe!</span>"
-	var/ignitermsg = "<span class='notice'>USER fiddles with FLAME, and eventually manages to light the NAME.</span>"
-	var/genericmsg = "<span class='notice'>USER lights the NAME with their FLAME.</span>"
+	var/matchmsg = "USER lights \the NAME with their FLAME."
+	var/lightermsg = "USER manages to awkwardly light \the NAME with FLAME."
+	var/zippomsg = "With a flick of their wrist, USER lights \the NAME with their FLAME."
+	var/weldermsg = "USER lights \the NAME with FLAME. That looked rather unsafe!"
+	var/ignitermsg = "USER fiddles with FLAME, and eventually manages to light \the NAME."
+	var/genericmsg = "USER lights \the NAME with their FLAME."
 	var/lit = FALSE
 
 /obj/item/fluff/nasira_burner/Destroy()
@@ -2410,7 +2410,7 @@ All custom items with worn sprites must follow the contained sprite system: http
 		lit = TRUE
 		playsound(src, 'sound/items/cigs_lighters/cig_light.ogg', 75, 1, -1)
 		var/turf/T = get_turf(src)
-		T.visible_message(lighting_text)
+		T.visible_message(SPAN_NOTICE(lighting_text))
 		set_light(2, 0.25, "#E38F46")
 		icon_state = "burner_lit"
 		START_PROCESSING(SSprocessing, src)
@@ -2419,7 +2419,7 @@ All custom items with worn sprites must follow the contained sprite system: http
 	if(lit)
 		lit = FALSE
 		var/turf/T = get_turf(src)
-		T.visible_message("[usr] extinguishes \the [src].")
+		T.visible_message(SPAN_NOTICE("[usr] extinguishes \the [src]."))
 		set_light(0)
 		icon_state = initial(icon_state)
 		STOP_PROCESSING(SSprocessing, src)

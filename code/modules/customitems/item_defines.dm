@@ -2388,6 +2388,11 @@ All custom items with worn sprites must follow the contained sprite system: http
 	icon_state = "burner"
 	drop_sound = 'sound/items/drop/glass.ogg'
 	pickup_sound = 'sound/items/pickup/glass.ogg'
+	matchmes = "<span class='notice'>USER lights the NAME with their FLAME.</span>"
+	lightermes = "<span class='notice'>USER manages to awkwardly light the NAME with FLAME.</span>"
+	zippomes = "<span class='notice'>With a flick of their wrist, USER lights their NAME with their FLAME.</span>"
+	weldermes = "<span class='notice'>USER lights the NAME with FLAME. That looked rather unsafe!</span>"
+	ignitermes = "<span class='notice'>USER fiddles with FLAME, and eventually manages to light the NAME.</span>"
 	var/lit = FALSE
 
 /obj/item/fluff/nasira_burner/Destroy()
@@ -2399,25 +2404,48 @@ All custom items with worn sprites must follow the contained sprite system: http
 	if(lit)
 		to_chat(user, "\The [src] is currently lit.")
 
-/obj/item/fluff/nasira_burner/attack_self(mob/user as mob)
-	lit = !lit
-
-	if(lit)
-		set_light(2)
-		START_PROCESSING(SSprocessing, src)
+/obj/item/fluff/nasira_burner/proc/light()
+	if(!lit)
+		lit = TRUE
+		playsound(src, 'sound/items/cigs_lighters/cig_light.ogg', 75, 1, -1)
+		set_light(2, 0.25, "#E38F46")
 		icon_state = "burner_lit"
-	else
+				START_PROCESSING(SSprocessing, src)
+
+/obj/item/fluff/nasira_burner/attack_self(mob/user as mob)
+	if(lit)
 		set_light(0)
 		lit = FALSE
 		icon_state = initial(icon_state)
 		STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/fluff/nasira_burner/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	if(W.isFlameSource())
+		var/text = matchmes
+		if(istype(W, /obj/item/flame/match))
+			text = matchmes
+		else if(istype(W, /obj/item/flame/lighter/zippo))
+			text = zippomes
+		else if(istype(W, /obj/item/flame/lighter))
+			text = lightermes
+		else if(W.iswelder())
+			text = weldermes
+		else if(istype(W, /obj/item/device/assembly/igniter))
+			text = ignitermes
+		else
+			text = genericmes
+		text = replacetext(text, "USER", "\the [user]")
+		text = replacetext(text, "NAME", "\the [name]")
+		text = replacetext(text, "FLAME", "\the [W.name]")
+		light(text)
 
 /obj/item/fluff/nasira_burner/process()
 	if(prob(10))
 		var/lit_message
 		
 		lit_message = pick( "The smell of ceremonial incense reaches your nose.",
-								"Adhomian incense permeates the air around you..",
+								"Adhomian incense permeates the air around you.",
 								"The soft glow of the incense burner illuminates the vicinity.")
 
 		if(lit_message)

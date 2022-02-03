@@ -2410,7 +2410,7 @@ All custom items with worn sprites must follow the contained sprite system: http
 		playsound(src, 'sound/items/cigs_lighters/cig_light.ogg', 75, 1, -1)
 		set_light(2, 0.25, "#E38F46")
 		icon_state = "burner_lit"
-				START_PROCESSING(SSprocessing, src)
+		START_PROCESSING(SSprocessing, src)
 
 /obj/item/fluff/nasira_burner/attack_self(mob/user as mob)
 	if(lit)

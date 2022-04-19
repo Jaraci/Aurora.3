@@ -16,8 +16,9 @@ var/list/department_radio_keys = list(
 	  ":x" = "Raider",		".x" = "Raider",
 	  ":b" = "Burglar",		".b" = "Burglar",
 	  ":j" = "Bluespace",	".j" = "Bluespace",
+	  ":y" = "Ship",		".y" = "Ship",
 	  ":q" = "Ninja",		".q" = "Ninja",
-	  ":u" = "Supply",		".u" = "Supply",
+	  ":u" = "Operations",	".u" = "Operations",
 	  ":v" = "Service",		".v" = "Service",
 	  ":p" = "AI Private",	".p" = "AI Private",
 	  ":z" = "Entertainment",".z" = "Entertainment",
@@ -38,8 +39,9 @@ var/list/department_radio_keys = list(
 	  ":X" = "Raider",		".X" = "Raider",
 	  ":B" = "Burglar",		".B" = "Burglar",
 	  ":J" = "Bluespace",	".J" = "Bluespace",
+	  ":Y" = "Ship",		".Y" = "Ship",
 	  ":Q" = "Ninja",		".Q" = "Ninja",
-	  ":U" = "Supply",		".U" = "Supply",
+	  ":U" = "Operations",	".U" = "Operations",
 	  ":V" = "Service",		".V" = "Service",
 	  ":P" = "AI Private",	".P" = "AI Private",
 	  ":Z" = "Entertainment",".Z" = "Entertainment",
@@ -57,7 +59,7 @@ var/list/department_radio_keys = list(
 	  ":û" = "Security",	".û" = "Security",
 	  ":ö" = "whisper",		".ö" = "whisper",
 	  ":å" = "Mercenary",	".å" = "Mercenary",
-	  ":é" = "Supply",		".é" = "Supply"
+	  ":é" = "Operations",	".é" = "Operations"
 )
 
 
@@ -156,7 +158,7 @@ proc/get_radio_key_from_channel(var/channel)
 			return FONT_SIZE_LARGE
 	return null
 
-/mob/living/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/ghost_hearing = GHOSTS_ALL_HEAR, var/whisper = FALSE)
+/mob/living/say(var/message, var/datum/language/speaking = null, var/verb, var/alt_name="", var/ghost_hearing = GHOSTS_ALL_HEAR, var/whisper = FALSE)
 	if(stat)
 		if(stat == DEAD)
 			return say_dead(message)
@@ -210,7 +212,8 @@ proc/get_radio_key_from_channel(var/channel)
 		speaking.broadcast(src,trim(message))
 		return 1
 
-	verb = say_quote(message, speaking, is_singing, whisper)
+	if(!verb)
+		verb = say_quote(message, speaking, is_singing, whisper)
 
 	if(is_muzzled())
 		to_chat(src, "<span class='danger'>You're muzzled and cannot speak!</span>")
@@ -245,7 +248,7 @@ proc/get_radio_key_from_channel(var/channel)
 
 	var/list/obj/item/used_radios = new
 	var/list/successful_radio = new // passes a list because standard vars don't work when passed
-	if(handle_message_mode(message_mode, message, verb, speaking, used_radios, alt_name, successful_radio, whisper))
+	if(handle_message_mode(message_mode, message, verb, speaking, used_radios, alt_name, successful_radio, whisper, is_singing))
 		return 1
 
 	var/list/handle_v = handle_speech_sound()

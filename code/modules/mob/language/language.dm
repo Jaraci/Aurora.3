@@ -55,7 +55,7 @@
 			understand_chance += partial_understanding[L.name]
 
 		if (length(origin_languages))
-			understand_chance += origin_languages[L.name]
+			understand_chance += origin_languages[name]
 
 	var/static/list/music_notes = list("\u2669", "\u266A", "\u266B")
 

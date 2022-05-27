@@ -34,6 +34,14 @@
 		if((!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src))) && !isobserver(src))
 			message = stars(message)
 
+	var/accent_icon = speaker.get_accent_icon(language, src)
+	var/speaker_name = speaker.name
+	var/list/origin_languages = list()
+	if(ishuman(speaker))
+		var/mob/living/carbon/human/H = speaker
+		speaker_name = H.GetVoice()
+		origin_languages = H.get_origin_languages()
+
 	if(!(language && (language.flags & INNATE))) // skip understanding checks for INNATE languages
 		if(!say_understands(speaker,language))
 			if(istype(speaker,/mob/living/simple_animal))
@@ -41,15 +49,9 @@
 				message = pick(S.speak)
 			else
 				if(language)
-					message = language.scramble(message, languages)
+					message = language.scramble(message, languages, origin_languages)
 				else
 					message = stars(message)
-
-	var/accent_icon = speaker.get_accent_icon(language, src)
-	var/speaker_name = speaker.name
-	if(ishuman(speaker))
-		var/mob/living/carbon/human/H = speaker
-		speaker_name = H.GetVoice()
 
 	if(italics)
 		message = "<i>[message]</i>"

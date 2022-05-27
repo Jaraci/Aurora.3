@@ -378,3 +378,10 @@
 	if(!isnull(species.floating_chat_x_offset))
 		return species.floating_chat_x_offset
 	return species.icon_x_offset
+
+/mob/living/carbon/human/proc/get_origin_languages()
+    var/list/final_origin_languages = list()
+    if(length(origin.origin_partial_understanding))
+        return origin.origin_partial_understanding
+    else
+        return culture.origin_partial_understanding

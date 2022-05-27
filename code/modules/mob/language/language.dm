@@ -47,12 +47,15 @@
 
 	return "[trim(full_name)]"
 
-/datum/language/proc/scramble(var/input, var/list/known_languages)
+/datum/language/proc/scramble(var/input, var/list/known_languages, var/list/origin_languages)
 
 	var/understand_chance = 0
 	for(var/datum/language/L in known_languages)
 		if(LAZYACCESS(partial_understanding, L.name))
 			understand_chance += partial_understanding[L.name]
+
+		if (length(origin_languages))
+			understand_chance += origin_languages[L.name]
 
 	var/static/list/music_notes = list("\u2669", "\u266A", "\u266B")
 

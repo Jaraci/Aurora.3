@@ -12,6 +12,7 @@
 		/decl/origin_item/origin/new_suez,
 		/decl/origin_item/origin/other_elyran
 	)
+	origin_partial_understanding = list(LANGUAGE_ELYRAN_STANDARD = 100)
 
 /decl/origin_item/origin/persepolis
 	name = "Persepolis"

@@ -1,6 +1,7 @@
 /decl/origin_item
     var/name = "generic origin item"
     var/desc = "You shouldn't be seeing this."
+    var/list/origin_partial_understanding = list()
     var/important_information //Big red text. Should only be used if not following it would incur a bwoink.
 
 /decl/origin_item/culture

@@ -80,6 +80,7 @@
 	possible_accents = list(ACCENT_ERIDANI, ACCENT_ERIDANIDREG, ACCENT_ERIDANIREINSTATED)
 	possible_citizenships = list(CITIZENSHIP_ERIDANI, CITIZENSHIP_COALITION, CITIZENSHIP_BIESEL)
 	possible_religions = RELIGIONS_SOLARIAN
+	origin_partial_understanding = (LANGUAGE_SOL_COMMON = 100, LANGUAGE_TRADEBAND = 25, LANGUAGE_GUTTER = 25)
 
 /decl/origin_item/origin/middle_ring
 	name = "Middle Ring"
